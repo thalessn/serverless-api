@@ -11,7 +11,7 @@ const makeCreateEmployee = (): CreateEmployeeUseCase => {
     execute(employee: CreateEmployeeModel): EmployeeModel {
       const fakeEmployee = {
         id: 'id',
-        nome: 'Thales',
+        nome: 'John',
         idade: '30',
         cargo: 'Chefia',
       }
@@ -91,6 +91,26 @@ describe('CreateEmployeeController', () => {
       nome: 'John',
       idade: '30',
       cargo: 'chefia',
+    })
+  })
+
+  it('Should return 200 if valid data is provided', () => {
+    const { sut } = makeSut()
+    const httpRequest = {
+      body: {
+        nome: 'John',
+        idade: '30',
+        cargo: 'Chefia',
+      },
+    }
+
+    const httpResponse = sut.handle(httpRequest)
+    expect(httpResponse.statusCode).toEqual(200)
+    expect(httpResponse.body).toEqual({
+      id: 'id',
+      nome: 'John',
+      idade: '30',
+      cargo: 'Chefia',
     })
   })
 })
