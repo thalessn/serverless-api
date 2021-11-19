@@ -53,4 +53,20 @@ describe('DbCreateEmployee UseCase', () => {
       cargo: 'Chefia',
     })
   })
+
+  it('Should throw if CreateEmployeeRepository throws', async () => {
+    const { sut, createEmployeeRepositoryStub } = makeSut()
+    jest
+      .spyOn(createEmployeeRepositoryStub, 'add')
+      .mockReturnValueOnce(
+        new Promise((resolve, reject) => reject(new Error()))
+      )
+    const employeeData = {
+      nome: 'John',
+      idade: '30',
+      cargo: 'Chefia',
+    }
+    const promise = sut.execute(employeeData)
+    await expect(promise).rejects.toThrow()
+  })
 })
