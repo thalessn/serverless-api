@@ -13,7 +13,7 @@ export class DbCreateEmployeeUseCase implements CreateEmployeeUseCase {
   }
 
   async execute(employee: CreateEmployeeModel): Promise<EmployeeModel> {
-    const createdEmployee = this.createEmployeeRepository.add(employee)
+    const createdEmployee = await this.createEmployeeRepository.add(employee)
     return createdEmployee
   }
 }
