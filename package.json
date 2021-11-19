@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
+    "test:staged": "jest --passWithNoTests",
     "dev": "ts-node-dev --respawn --transpile-only --inspect -- ./src/index.ts",
     "prepare": "husky install",
     "pre-commit": "lint-staged"
