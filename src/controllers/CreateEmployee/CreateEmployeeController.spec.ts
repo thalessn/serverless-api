@@ -8,7 +8,7 @@ import {
 
 const makeCreateEmployee = (): CreateEmployeeUseCase => {
   class CreateEmployeeUseCaseStub implements CreateEmployeeUseCase {
-    execute(employee: CreateEmployeeModel): EmployeeModel {
+    async execute(employee: CreateEmployeeModel): Promise<EmployeeModel> {
       const fakeEmployee = {
         id: 'id',
         nome: 'John',
@@ -36,7 +36,7 @@ const makeSut = (): SutTypes => {
 }
 
 describe('CreateEmployeeController', () => {
-  it('Should return error 400 if property nome not found', () => {
+  it('Should return error 400 if property nome not found', async () => {
     const { sut } = makeSut()
     const httpRequest = {
       body: {
@@ -44,12 +44,12 @@ describe('CreateEmployeeController', () => {
         cargo: 'chefia',
       },
     }
-    const httpResponse = sut.handle(httpRequest)
+    const httpResponse = await sut.handle(httpRequest)
     expect(httpResponse.statusCode).toBe(400)
     expect(httpResponse.body).toEqual(new MissingParamError('nome'))
   })
 
-  it('Should return error 400 if property idade not found', () => {
+  it('Should return error 400 if property idade not found', async () => {
     const { sut } = makeSut()
     const httpRequest = {
       body: {
@@ -57,12 +57,12 @@ describe('CreateEmployeeController', () => {
         cargo: 'chefia',
       },
     }
-    const httpResponse = sut.handle(httpRequest)
+    const httpResponse = await sut.handle(httpRequest)
     expect(httpResponse.statusCode).toBe(400)
     expect(httpResponse.body).toEqual(new MissingParamError('idade'))
   })
 
-  it('Should return error 400 if property cargo not found', () => {
+  it('Should return error 400 if property cargo not found', async () => {
     const { sut } = makeSut()
     const httpRequest = {
       body: {
@@ -70,12 +70,12 @@ describe('CreateEmployeeController', () => {
         idade: '30',
       },
     }
-    const httpResponse = sut.handle(httpRequest)
+    const httpResponse = await sut.handle(httpRequest)
     expect(httpResponse.statusCode).toBe(400)
     expect(httpResponse.body).toEqual(new MissingParamError('cargo'))
   })
 
-  it('Should call CreateEmployeeUseCase with the correct values', () => {
+  it('Should call CreateEmployeeUseCase with the correct values', async () => {
     const { sut, createEmployeeUseCaseStub } = makeSut()
     const createEmployeeSpy = jest.spyOn(createEmployeeUseCaseStub, 'execute')
     const httpRequest = {
@@ -86,7 +86,7 @@ describe('CreateEmployeeController', () => {
       },
     }
 
-    sut.handle(httpRequest)
+    await sut.handle(httpRequest)
     expect(createEmployeeSpy).toHaveBeenCalledWith({
       nome: 'John',
       idade: '30',
@@ -94,7 +94,7 @@ describe('CreateEmployeeController', () => {
     })
   })
 
-  it('Should return 200 if valid data is provided', () => {
+  it('Should return 200 if valid data is provided', async () => {
     const { sut } = makeSut()
     const httpRequest = {
       body: {
@@ -104,7 +104,7 @@ describe('CreateEmployeeController', () => {
       },
     }
 
-    const httpResponse = sut.handle(httpRequest)
+    const httpResponse = await sut.handle(httpRequest)
     expect(httpResponse.statusCode).toEqual(200)
     expect(httpResponse.body).toEqual({
       id: 'id',

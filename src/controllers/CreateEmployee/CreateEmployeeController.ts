@@ -11,7 +11,7 @@ export class CreateEmployeeController implements Controller {
     this.createEmployeeUseCase = createEmployeeUseCase
   }
 
-  handle(httpRequest: HttpRequest): HttpResponse {
+  async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
     const requiredFields = ['nome', 'idade', 'cargo']
     for (const field of requiredFields) {
       if (!httpRequest.body[field]) {
@@ -20,7 +20,7 @@ export class CreateEmployeeController implements Controller {
     }
 
     const { nome, idade, cargo } = httpRequest.body
-    const employee = this.createEmployeeUseCase.execute({
+    const employee = await this.createEmployeeUseCase.execute({
       nome,
       idade,
       cargo,

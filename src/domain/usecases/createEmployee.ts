@@ -7,5 +7,5 @@ export interface CreateEmployeeModel {
 }
 
 export interface CreateEmployeeUseCase {
-  execute(employee: CreateEmployeeModel): EmployeeModel
+  execute(employee: CreateEmployeeModel): Promise<EmployeeModel>
 }
