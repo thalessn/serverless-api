@@ -2,6 +2,7 @@ import { HttpRequest, HttpResponse } from '../protocols/http'
 import { MissingParamError } from '../errors/missing-param-error'
 import { Controller } from '../protocols/controller'
 import { CreateEmployeeUseCase } from '../../domain/usecases/createEmployee'
+import { badRequest, ok } from '../helpers/http-helper'
 
 export class CreateEmployeeController implements Controller {
   private readonly createEmployeeUseCase: CreateEmployeeUseCase
@@ -14,10 +15,7 @@ export class CreateEmployeeController implements Controller {
     const requiredFields = ['nome', 'idade', 'cargo']
     for (const field of requiredFields) {
       if (!httpRequest.body[field]) {
-        return {
-          statusCode: 400,
-          body: new MissingParamError(field),
-        }
+        return badRequest(new MissingParamError(field))
       }
     }
 
@@ -28,9 +26,6 @@ export class CreateEmployeeController implements Controller {
       cargo,
     })
 
-    return {
-      statusCode: 200,
-      body: employee,
-    }
+    return ok(employee)
   }
 }
