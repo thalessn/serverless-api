@@ -11,9 +11,9 @@ const makeCreateEmployeeRepository = (): CreateEmployeeRepository => {
     async add(employee: CreateEmployeeModel): Promise<EmployeeModel> {
       return {
         id: 'id',
-        nome: 'John',
-        idade: '30',
-        cargo: 'Chefia',
+        nome: 'Thales',
+        idade: '28',
+        cargo: 'Desenvolvedor',
       }
     }
   }
@@ -68,5 +68,21 @@ describe('DbCreateEmployee UseCase', () => {
     }
     const promise = sut.execute(employeeData)
     await expect(promise).rejects.toThrow()
+  })
+
+  it('Should return an Employee on sucess', async () => {
+    const { sut } = makeSut()
+    const employeeData = {
+      nome: 'Thales',
+      idade: '28',
+      cargo: 'Desenvolvedor',
+    }
+    const employee = await sut.execute(employeeData)
+    expect(employee).toEqual({
+      id: 'id',
+      nome: 'Thales',
+      idade: '28',
+      cargo: 'Desenvolvedor',
+    })
   })
 })
