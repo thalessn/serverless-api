@@ -22,7 +22,7 @@ export class CreateEmployeeController implements Controller {
     }
 
     const { nome, idade, cargo } = httpRequest.body
-    this.createEmployeeUseCase.execute({
+    const employee = this.createEmployeeUseCase.execute({
       nome,
       idade,
       cargo,
@@ -30,6 +30,7 @@ export class CreateEmployeeController implements Controller {
 
     return {
       statusCode: 200,
+      body: employee,
     }
   }
 }
