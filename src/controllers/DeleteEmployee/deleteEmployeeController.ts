@@ -12,11 +12,11 @@ export class DeleteEmployeeController implements Controller {
 
   async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
     try {
-      if (!httpRequest.body['id']) {
+      if (!httpRequest.params['id']) {
         return badRequest(new MissingParamError('id'))
       }
 
-      const { id } = httpRequest.body
+      const { id } = httpRequest.params
       await this.deleteEmployeeUseCase.execute(id)
 
       return {
@@ -25,7 +25,7 @@ export class DeleteEmployeeController implements Controller {
     } catch (error: any) {
       return {
         statusCode: 500,
-        body: 'Server Error',
+        body: error.message,
       }
     }
   }
