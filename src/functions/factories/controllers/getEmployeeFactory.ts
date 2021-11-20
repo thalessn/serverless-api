@@ -1,4 +1,4 @@
-import { GetEmployeeController } from '../../../controllers/GetEmployeeController/getEmployeeController'
+import { GetEmployeeController } from '../../../controllers/GetEmployee/getEmployeeController'
 import { Controller } from '../../../controllers/protocols/controller'
 import { makeGetEmployeeUseCase } from '../usecases/getEmployeeFactory'
 
