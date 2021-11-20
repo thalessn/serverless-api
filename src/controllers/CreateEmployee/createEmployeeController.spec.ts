@@ -1,4 +1,4 @@
-import { CreateEmployeeController } from './CreateEmployeeController'
+import { CreateEmployeeController } from './createEmployeeController'
 import { MissingParamError } from '../errors/missing-param-error'
 import { EmployeeModel } from '../../domain/employee'
 import {
