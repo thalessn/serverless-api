@@ -14,6 +14,8 @@ import { marshall, unmarshall } from '@aws-sdk/util-dynamodb'
 import { v4 as uuidv4 } from 'uuid'
 import { DeleteEmployeeRepository } from '../../data/protocols/deleteEmployeeRepository'
 import { GetEmployeeRepository } from '../../data/protocols/getEEmployeeRepository'
+import { UpdateEmployeeRepository } from '../../data/protocols/updateEmployeeRepository'
+import { UpdateEmployeeModel } from '../../domain/usecases/updateEmployee'
 
 const TableName = 'employee'
 
@@ -21,7 +23,8 @@ export class DynamoRepository
   implements
     CreateEmployeeRepository,
     DeleteEmployeeRepository,
-    GetEmployeeRepository
+    GetEmployeeRepository,
+    UpdateEmployeeRepository
 {
   async add(employeeData: CreateEmployeeModel): Promise<EmployeeModel> {
     const employee = {
@@ -65,16 +68,23 @@ export class DynamoRepository
 
     const results = await dynamoClient.send(new GetItemCommand(params))
     if (results && results.$metadata.httpStatusCode === 200) {
-      const emptyEmployee = {
-        id: '',
-        nome: '',
-        idade: '',
-        cargo: '',
-      }
       const employee = unmarshall(results.Item || {}) as EmployeeModel
       return employee
     }
 
-    throw new Error('Method not implemented.')
+    throw new Error('It was not possible to connect to the bank')
+  }
+
+  async update(employeeData: UpdateEmployeeModel): Promise<EmployeeModel> {
+    const params: PutItemCommandInput = {
+      TableName,
+      Item: marshall(employeeData),
+    }
+
+    const results = await dynamoClient.send(new PutItemCommand(params))
+    if (results && results.$metadata.httpStatusCode === 200) {
+      return employeeData
+    }
+    throw new Error('It was not possible to connect to the bank')
   }
 }
