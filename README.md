@@ -1,5 +1,5 @@
 # Serverless API
-----------------
+
 
 ### Proposta
 Provisionar uma infraestrutura na AWS, em que se tenha uma lambda que sejá capaz de registrar em um banco de dados relacional ou não relacional, dados sobre funcionários de uma empresa.
@@ -74,7 +74,7 @@ layers:
 ```
 
 
-#### API DOCS
+### API DOCS
 ------------------
 #### Funcionário
 
@@ -86,13 +86,13 @@ layers:
 | cargo       | Cargo ocupado pelo funcionário            |
 
 
-##### Endpoints
+### Endpoints
 ----------------
 
-##### GET /employee/{id}
+#### GET /employee/{id}
 Retorna o funcionário com a id informada
 
-###### GET /employee/ad8ecede-ddc5-4f50-980a-2f55cb0bc42e
+##### GET /employee/ad8ecede-ddc5-4f50-980a-2f55cb0bc42e
 `HTTP/1.1 200 OK`
 ```json
 {
@@ -103,7 +103,7 @@ Retorna o funcionário com a id informada
 }
 ```
 
-##### POST /employee
+#### POST /employee
 Cria um novo funcionário
 ```json
 {
