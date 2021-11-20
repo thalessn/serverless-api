@@ -3,20 +3,37 @@ import {
   APIGatewayProxyEvent,
   APIGatewayProxyResult,
 } from 'aws-lambda'
+import { makeUpdateEmployeeController } from './factories/controllers/updateEmployeeFactory'
 
 export const handler: APIGatewayProxyHandler = async (
-  _event: APIGatewayProxyEvent
+  event: APIGatewayProxyEvent
 ): Promise<APIGatewayProxyResult> => {
   try {
-    const response = {
-      statusCode: 200,
-      body: 'HELLO YOU ARE MY FRIEND!!!',
+    const id = event.pathParameters?.id
+    const body = event.body ? JSON.parse(event.body) : ''
+    if (id && body) {
+      const controller = makeUpdateEmployeeController()
+      const response = await controller.handle({
+        params: {
+          id,
+        },
+        body,
+      })
+
+      return {
+        statusCode: response.statusCode,
+        body: JSON.stringify(response.body),
+      }
     }
-    return response
-  } catch (err) {
+
+    return {
+      statusCode: 400,
+      body: 'The param id or body were not found',
+    }
+  } catch (err: any) {
     return {
       statusCode: 500,
-      body: 'An error occured',
+      body: err.message,
     }
   }
 }
