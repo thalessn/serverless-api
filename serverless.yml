@@ -52,7 +52,7 @@ functions:
     handler: src/functions/list.handler
     events:
       - http:
-          path: employee
+          path: employee/{id}
           method: get          
           cors: true
 
