@@ -1,0 +1,73 @@
+service: serverless
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+  region: us-east-2
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:DescribeTable
+        - dynamodb:Query
+        - dynamodb:Scan
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+        - dynamodb:UpdateItem
+        - dynamodb:DeleteItem
+      Resource: arn:aws:dynamodb:us-east-2:*:*
+
+plugins:
+  - serverless-plugin-typescript
+  - serverless-offline
+  
+resources:      
+  Resources:
+    EmployeeTable:
+      Type: 'AWS::DynamoDB::Table'
+      DeletionPolicy: Retain
+      Properties:
+        AttributeDefinitions:
+          -
+            AttributeName: id
+            AttributeType: S
+        KeySchema:
+          -
+            AttributeName: id
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+        TableName: 'employee'
+
+functions:
+  create:
+    handler: src/functions/create.handler
+    events:
+      - http:
+          path: employee
+          method: post
+          cors: true
+
+  list:
+    handler: src/functions/list.handler
+    events:
+      - http:
+          path: employee
+          method: get          
+          cors: true
+
+  update:
+    handler: src/functions/update.handler
+    events:
+      - http:
+          path: employee/{id}
+          method: put
+          cors: true          
+
+  delete:
+    handler: src/functions/delete.handler
+    events:
+      - http:
+          path: employee/{id}
+          method: delete
+          cors: true          
