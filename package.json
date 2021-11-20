@@ -6,7 +6,7 @@
   "scripts": {
     "test": "jest --watch",
     "test:staged": "jest --passWithNoTests",
-    "dev": "sls offline -s dev",
+    "dev": "serverless offline -s dev",
     "prepare": "husky install",
     "pre-commit": "lint-staged",
     "deploy": "serverless deploy -s dev"
