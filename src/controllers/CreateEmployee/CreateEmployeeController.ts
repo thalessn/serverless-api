@@ -12,20 +12,27 @@ export class CreateEmployeeController implements Controller {
   }
 
   async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
-    const requiredFields = ['nome', 'idade', 'cargo']
-    for (const field of requiredFields) {
-      if (!httpRequest.body[field]) {
-        return badRequest(new MissingParamError(field))
+    try {
+      const requiredFields = ['nome', 'idade', 'cargo']
+      for (const field of requiredFields) {
+        if (!httpRequest.body[field]) {
+          return badRequest(new MissingParamError(field))
+        }
+      }
+
+      const { nome, idade, cargo } = httpRequest.body
+      const employee = await this.createEmployeeUseCase.execute({
+        nome,
+        idade,
+        cargo,
+      })
+
+      return ok(employee)
+    } catch (error: any) {
+      return {
+        statusCode: 500,
+        body: error.message,
       }
     }
-
-    const { nome, idade, cargo } = httpRequest.body
-    const employee = await this.createEmployeeUseCase.execute({
-      nome,
-      idade,
-      cargo,
-    })
-
-    return ok(employee)
   }
 }
