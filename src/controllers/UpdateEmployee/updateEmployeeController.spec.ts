@@ -1,14 +1,14 @@
 import { EmployeeModel } from '../../domain/employee'
 import {
   UpdateEmployeeUseCase,
-  UpdateEmployModel,
+  UpdateEmployeeModel,
 } from '../../domain/usecases/updateEmployee'
 import { MissingParamError } from '../errors/missing-param-error'
 import { UpdateEmployeeController } from './updateEmployeeController'
 
 const makeUpdateUseCaseStub = (): UpdateEmployeeUseCase => {
   class UpdateEmployeeUseCaseStub implements UpdateEmployeeUseCase {
-    async execute(updateEmployee: UpdateEmployModel): Promise<EmployeeModel> {
+    async execute(updateEmployee: UpdateEmployeeModel): Promise<EmployeeModel> {
       const updatedEmployee = {
         id: updateEmployee.id,
         nome: updateEmployee.nome,

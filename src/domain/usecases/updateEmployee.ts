@@ -1,7 +1,7 @@
 import { HttpRequest } from '../../controllers/protocols/http'
 import { EmployeeModel } from '../employee'
 
-export interface UpdateEmployModel {
+export interface UpdateEmployeeModel {
   id: string
   nome: string
   idade: string
@@ -9,5 +9,5 @@ export interface UpdateEmployModel {
 }
 
 export interface UpdateEmployeeUseCase {
-  execute(updateEmployee: UpdateEmployModel): Promise<EmployeeModel>
+  execute(updateEmployee: UpdateEmployeeModel): Promise<EmployeeModel>
 }
