@@ -1,13 +1,10 @@
 import { MissingParamError } from '../errors/missing-param-error'
 import { DeleteEmployeeController } from './deleteEmployeeController'
-import {
-  DeleteEmployeeModel,
-  DeleteEmployeeUseCase,
-} from '../../domain/usecases/deleteEmployee'
+import { DeleteEmployeeUseCase } from '../../domain/usecases/deleteEmployee'
 
 const makeDeleteEmployeeUseCaseStub = (): DeleteEmployeeUseCase => {
   class DeleteEmployeeUseCaseStub implements DeleteEmployeeUseCase {
-    async execute(id: DeleteEmployeeModel): Promise<void> {}
+    async execute(id: string): Promise<void> {}
   }
   return new DeleteEmployeeUseCaseStub()
 }
