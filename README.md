@@ -2,7 +2,7 @@
 
 
 ### Proposta
-Provisionar uma infraestrutura na AWS, em que se tenha uma lambda que sejá capaz de registrar em um banco de dados relacional ou não relacional, dados sobre funcionários de uma empresa.
+Provisionar uma infraestrutura na AWS, em que se tenha uma lambda que seja capaz de registrar em um banco de dados relacional ou não relacional, dados sobre funcionários de uma empresa.
 
 #### Requisitos
 1. Utilizar Clean Architecture
